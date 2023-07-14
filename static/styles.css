@@ -6,3 +6,7 @@ body {
     background-color: var(--bg-color);
     color: white;
 }
+
+h2 {
+    text-align: center;
+}
