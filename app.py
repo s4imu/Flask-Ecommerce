@@ -15,3 +15,14 @@ def products_page():
         {'id': 4, 'name': 'television', 'barcode': '163719', 'price': 3000}
     ]
     return render_template("products.html", itens=products)
+
+
+@app.route('/login')
+def login_page():
+
+    return render_template("login.html")
+
+@app.route('/signup')
+def signup_page():
+
+    return render_template("signup.html")
