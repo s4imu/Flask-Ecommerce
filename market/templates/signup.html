@@ -12,6 +12,9 @@
         Please, Register your account
       </h1>
       <form method="POST" class="form-register"> 
+
+        {{ form.hidden_tag() }}
+
         {{form.user.label()}}
         {{form.user(class="form-control", placeholder="username")}}
 
