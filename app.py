@@ -1,6 +1,11 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
+
+db = SQLAlchemy()
 app = Flask(__name__)
+app.config["SQL_ALCHEMY_DATABASE_URI"]="sqlite:///market.db"
+db.init_app(app)
 
 @app.route('/')
 def home_page():
