@@ -14,6 +14,8 @@ class Item(db.Model):
     barcode = db.Column(db.String(length=12), nullable=False, unique=True)
     description = db.Column(db.String(length=1024), nullable=False)
 
+    def __repr__(self):
+        return f"\nName: {self.name}, Price: {self.price}, Barcode: {self.barcode}, Description: {self.description}"
 @app.route('/')
 def home_page():
     return render_template("index.html")
