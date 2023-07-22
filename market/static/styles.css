@@ -16,6 +16,7 @@ h2 {
     height: 200px;
 }
 
-.form-register {
+.form-register,
+.form-signin {
     color: whitesmoke;
 }

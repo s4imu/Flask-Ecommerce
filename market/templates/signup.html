@@ -32,7 +32,14 @@
 
         {{form.password2.label()}}
         {{form.password2(class="form-control")}}
+        
         <br>
+
+        <div class="checkbox mb-3">
+          <h5>Already have an account?</h5>
+          <a href="{{url_for('login_page')}}" class="btn btn-sm btn-secondary">Sign In</a>
+        </div>
+
         <div class="d-grid">
           {{ form.submit(class="btn btn-lg btn-success")}}
         </div>

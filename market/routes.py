@@ -1,7 +1,7 @@
 from market import app 
 from flask import render_template, redirect, url_for, flash
 from market.models import Item, User
-from market.forms import RegisterForm
+from market.forms import RegisterForm, LoginForm
 from market import db
 
 @app.route('/')
@@ -13,9 +13,11 @@ def products_page():
     products = Item.query.all()
     return render_template("products.html", itens=products)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login_page(): 
-    return render_template("login.html")
+    form = LoginForm()
+
+    return render_template("login.html", form=form)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_page():
@@ -24,7 +26,7 @@ def signup_page():
         new_user = User(
             user = form.user.data,
             email = form.email.data,
-            password = form.password1.data
+            crippassword = form.password1.data
         )
         db.session.add(new_user)
         db.session.commit()
