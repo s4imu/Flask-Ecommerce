@@ -1,4 +1,4 @@
-from market import db
+from market import db, brcypt
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -7,6 +7,14 @@ class User(db.Model):
     password = db.Column(db.String(length=60), nullable=False)
     cash = db.Column(db.Integer, nullable=False, default=5000)
     itens = db.relationship('Item', backref='owner_user', lazy=True)
+
+    @property  
+    def crippassword(self):
+        return self.crippassword
+    
+    @crippassword.setter
+    def crippassword(self, password_text):
+        self.password = brcypt.generate_password_hash(password_text).decode('utf-8')
 
     def __repr__(self):
         return f"\nUser: {self.user}, Email: {self.email}, Password: {self.password}, Cash: {self.cash}"
