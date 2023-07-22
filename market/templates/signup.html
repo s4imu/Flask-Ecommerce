@@ -17,10 +17,16 @@
 
         {{form.user.label()}}
         {{form.user(class="form-control", placeholder="username")}}
+        {% if form.user.errors %}
+          <div class="error-message">{{ form.user.errors[0] }}</div>
+        {% endif %}
 
         {{form.email.label()}}
         {{form.email(class="form-control", placeholder="email@email.com")}}
-
+        {% if form.email.errors %}
+          <div class="error-message">{{ form.email.errors[0] }}</div>
+        {% endif %}
+        
         {{form.password1.label()}}
         {{form.password1(class="form-control")}}
 
