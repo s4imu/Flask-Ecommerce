@@ -11,6 +11,8 @@ app.config["SECRET_KEY"] = '870b211fe0dc289fbe933a48'
 db.init_app(app)
 brcypt = Bcrypt(app)
 login_manager.init_app(app)
+login_manager.login_view = "login_page"
+login_manager.login_message_category = "info"
 app.static_folder = 'static'
 
 from market import routes
