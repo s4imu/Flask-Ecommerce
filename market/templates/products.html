@@ -21,13 +21,14 @@
           </thead>
           <tbody>
               {% for item in itens %}
+                {% include 'includes/modal-products.html' %}
                   <tr>
                       <th scope="row">{{item.id}}</th>
                       <td>{{item.name}}</td>
                       <td>{{item.barcode}}</td>
                       <td>{{item.price}}</td>
                       <td>
-                        <button class="btn btn-outline btn-info">More Information</button>
+                        <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#exampleModal-{{item.id}}">More Information</button>
                         <button class="btn btn-outline btn-success">Buy</button>
                       </td>
                   </tr>
