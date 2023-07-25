@@ -25,3 +25,8 @@ h2 {
     color: lawngreen;
     font-weight: bold;
 }
+
+.products-row {
+    margin-top: 20px;
+    margin-left: 20px;
+}
