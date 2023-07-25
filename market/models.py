@@ -1,6 +1,11 @@
-from market import db, brcypt
+from market import db, brcypt, login_manager
+from flask_login import UserMixin
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(length=30), nullable=False, unique=True)
     email = db.Column(db.String(length=50), nullable=False, unique=True)
@@ -15,6 +20,9 @@ class User(db.Model):
     @crippassword.setter
     def crippassword(self, password_text):
         self.password = brcypt.generate_password_hash(password_text).decode('utf-8')
+
+    def decrypt_password(self, decrypted_password):
+        return brcypt.check_password_hash(self.password, decrypted_password)
 
     def __repr__(self):
         return f"\nUser: {self.user}, Email: {self.email}, Password: {self.password}, Cash: {self.cash}"
