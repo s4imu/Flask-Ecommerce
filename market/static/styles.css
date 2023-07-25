@@ -20,3 +20,8 @@ h2 {
 .form-signin {
     color: whitesmoke;
 }
+
+.cash-value{
+    color: lawngreen;
+    font-weight: bold;
+}

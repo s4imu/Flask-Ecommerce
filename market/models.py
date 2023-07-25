@@ -13,6 +13,13 @@ class User(db.Model, UserMixin):
     cash = db.Column(db.Integer, nullable=False, default=5000)
     itens = db.relationship('Item', backref='owner_user', lazy=True)
 
+    @property
+    def format_cash(self):
+        if len(str(self.cash)) >= 4:
+            return f'R$ {str(self.cash)[:-3]},{str(self.cash)[-3:]}'
+        else:
+            return f'R$ {self.cash}'
+
     @property  
     def crippassword(self):
         return self.crippassword

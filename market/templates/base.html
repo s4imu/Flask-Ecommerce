@@ -24,10 +24,22 @@
               <a class="nav-link active" aria-current="page" href="{{url_for('home_page')}}">Home</a>
               <a class="nav-link" href="{{url_for('products_page')}}">Products</a>
             </div>
-            <div class="navbar-nav ms-auto">
+            {% if current_user.is_authenticated %}
+              <div class="navbar-nav ms-auto">
+                <a class="cash-value nav-link">
+                  <i class="fas fa-coins"></i>
+                  {{current_user.format_cash}}
+                </a>
+                <a class="nav-link">Welcome, {{current_user.user}}</a>
+                <a class="nav-link" href="#">Logout</a>
+              </div>
+            {% else %}
+              <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{{url_for('login_page')}}">Login</a>
                 <a class="nav-link" href="{{url_for('signup_page')}}">Sign Up</a>
-            </div>
+              </div>
+            {% endif %}
+
           </div>
         </div>
       </nav>
@@ -54,5 +66,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-</body>
+    <script src="https://kit.fontawesome.com/1117f05b2d.js" crossorigin="anonymous"></script>
+  </body>
 </html>
