@@ -16,9 +16,9 @@ class User(db.Model, UserMixin):
     @property
     def format_cash(self):
         if len(str(self.cash)) >= 4:
-            return f'R$ {str(self.cash)[:-3]},{str(self.cash)[-3:]}'
+            return f'US$ {str(self.cash)[:-3]},{str(self.cash)[-3:]}'
         else:
-            return f'R$ {self.cash}'
+            return f'US$ {self.cash}'
 
     @property  
     def crippassword(self):
@@ -31,8 +31,8 @@ class User(db.Model, UserMixin):
     def decrypt_password(self, decrypted_password):
         return brcypt.check_password_hash(self.password, decrypted_password)
 
-    def __repr__(self):
-        return f"\nUser: {self.user}, Email: {self.email}, Password: {self.password}, Cash: {self.cash}"
+    def possible_purchase(self, product_obj):
+        return self.cash >= product_obj.price
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,5 +42,16 @@ class Item(db.Model):
     description = db.Column(db.String(length=1024), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __repr__(self):
-        return f"\nName: {self.name}, Price: {self.price}, Barcode: {self.barcode}, Description: {self.description}"
+    @property
+    def format_price(self):
+        if len(str(self.price)) >= 4:
+            return f'US$ {str(self.price)[:-3]},{str(self.price)[-3:]}'
+        else:
+            return f'US$ {self.price}'
+        
+    def purchase(self, current_user):
+        self.owner = current_user.id
+        current_user.cash -= self.price
+        db.session.commit()
+
+  

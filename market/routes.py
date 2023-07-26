@@ -1,19 +1,31 @@
 from market import app 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from market.models import Item, User
-from market.forms import RegisterForm, LoginForm
+from market.forms import RegisterForm, LoginForm, BuyProductForm, SaleProductForm
 from market import db
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
 def home_page():
     return render_template("index.html")
 
-@app.route('/products')
+@app.route('/products', methods=['GET', 'POST'])
 @login_required
 def products_page():
-    products = Item.query.all()
-    return render_template("products.html", itens=products)
+    buy_form = BuyProductForm()
+    if request.method == "POST":
+        buy_product = request.form.get("buy_product")
+        product_obj = Item.query.filter_by(name=buy_product).first()
+        if product_obj:
+            if current_user.possible_purchase(product_obj):
+                product_obj.purchase(current_user)
+                flash(f"{product_obj.name} Successfully Purchased!!!", category="success")
+            else:
+                flash(f"Purchase of {product_obj.name} not made due to lack of balance", category="danger")
+        return redirect(url_for('products_page'))
+    if request.method == "GET":
+        products = Item.query.filter_by(owner=None)
+        return render_template("products.html", itens=products, buy_form=buy_form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page(): 
