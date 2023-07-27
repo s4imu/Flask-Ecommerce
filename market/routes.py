@@ -13,6 +13,8 @@ def home_page():
 @login_required
 def products_page():
     buy_form = BuyProductForm()
+    sale_form = SaleProductForm()
+    # Buy Product
     if request.method == "POST":
         buy_product = request.form.get("buy_product")
         product_obj = Item.query.filter_by(name=buy_product).first()
@@ -22,10 +24,22 @@ def products_page():
                 flash(f"{product_obj.name} Successfully Purchased!!!", category="success")
             else:
                 flash(f"Purchase of {product_obj.name} not made due to lack of balance", category="danger")
+    # Return Product
+        sale_product = request.form.get("sale_product")
+        sale_product_obj = Item.query.filter_by(name=sale_product).first()
+        if sale_product:
+            if current_user.possible_return(sale_product_obj):
+                sale_product_obj.return_product(current_user)
+                flash(f"{sale_product_obj.name} Successfully Returned!!!", category="success")
+            else:
+                flash(f"Return of {sale_product_obj.name} unsuccessful", category="danger")
+
         return redirect(url_for('products_page'))
+
     if request.method == "GET":
         products = Item.query.filter_by(owner=None)
-        return render_template("products.html", itens=products, buy_form=buy_form)
+        owner_items = Item.query.filter_by(owner=current_user.id)
+        return render_template("products.html", itens=products, owner_items=owner_items, buy_form=buy_form, sale_form=sale_form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page(): 

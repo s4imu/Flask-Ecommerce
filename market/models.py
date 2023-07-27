@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(length=50), nullable=False, unique=True)
     password = db.Column(db.String(length=60), nullable=False)
     cash = db.Column(db.Integer, nullable=False, default=5000)
-    itens = db.relationship('Item', backref='owner_user', lazy=True)
+    items = db.relationship('Item', backref='owner_user', lazy=True)
 
     @property
     def format_cash(self):
@@ -33,7 +33,9 @@ class User(db.Model, UserMixin):
 
     def possible_purchase(self, product_obj):
         return self.cash >= product_obj.price
-
+    def possible_return(self, product_obj):
+        return product_obj in self.items
+    
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(length=30), nullable=False, unique=True)
@@ -52,6 +54,11 @@ class Item(db.Model):
     def purchase(self, current_user):
         self.owner = current_user.id
         current_user.cash -= self.price
+        db.session.commit()
+
+    def return_product(self, current_user):
+        self.owner = None
+        current_user.cash += self.price
         db.session.commit()
 
   

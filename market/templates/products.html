@@ -39,6 +39,26 @@
     <div class="col-4">
       <h2>Purchased Products</h2>
       <hr>
+      <div class="row">
+      {% for item in owner_items %}
+          {% include 'includes/owner-modal-products.html' %}
+          <div class="col-md-6">
+            <div class="card text-center bg-dark purchased-card">
+              <div class="card-body">
+                <h5 class="card-title">{{item.name}}</h5>
+                <p class="card-text">{{item.format_price}}</p>
+               <button class="return-button btn btn-outline-danger"
+                data-toggle="modal"
+                data-target="#exampleModalSale-{{item.id}}"
+                type="button"
+               >
+                  Return this product
+               </button>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+        </div>
     </div>
   </div>
 {% endblock %} 

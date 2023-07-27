@@ -34,3 +34,12 @@ h2 {
 .modal-content {
     background-color: #212121;
 }
+
+.purchased-card {
+   width: 16rem;
+}
+
+.return-button {
+    margin-bottom: 12px;
+    margin-top: 12px;
+}

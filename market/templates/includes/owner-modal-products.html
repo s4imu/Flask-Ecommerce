@@ -1,0 +1,28 @@
+<!-- Sale Modal -->
+<div class="modal fade" id="exampleModalSale-{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{item.name}}</h5>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ sale_form.hidden_tag() }}
+          <h4>
+            Want to return {{item.name}}?
+          </h4>
+          <br>
+          <h6>
+            Click in <strong>return</strong> to purchase this item
+          </h6>
+          <br>
+        <input id="sale_product" name="sale_product" type="hidden" value="{{item.name}}">
+          {{ sale_form.submit(class="btn btn-outline-danger btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

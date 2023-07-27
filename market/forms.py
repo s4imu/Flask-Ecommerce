@@ -29,4 +29,4 @@ class BuyProductForm(FlaskForm):
     submit = SubmitField(label='Buy Product')
 
 class SaleProductForm(FlaskForm):
-    submit = SubmitField(label='Sale Product')
+    submit = SubmitField(label='Return Product')
